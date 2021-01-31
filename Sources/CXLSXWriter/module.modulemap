@@ -1,0 +1,6 @@
+
+module CXLSXWriter [system] {
+  header "shim.h"
+  link "xlsxwriter"
+  export *
+}
