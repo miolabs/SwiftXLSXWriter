@@ -21,6 +21,7 @@ let package = Package(
     targets: [
         .systemLibrary(
             name: "CXLSXWriter",
+            pkgConfig: "libxlsxwriter",
             providers: [
                 .brew(["libxlsxwriter"])
             ]
@@ -29,8 +30,8 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "SwiftXLSXWriter",
-            dependencies: ["CXLSXWriter"],
-            linkerSettings: [.unsafeFlags(["-L/usr/local/lib", "-lxlsxwriter"])]
+            dependencies: ["CXLSXWriter"]
+//            linkerSettings: [.unsafeFlags(["-L/usr/local/lib", "-lxlsxwriter"])]
         ),
         .testTarget(
             name: "SwiftXLSXWriterTests",
