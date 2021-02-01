@@ -8,10 +8,6 @@
 #ifndef CLIB_SWIFT_XLSXWRITER
 #define CLIB_SWIFT_XLSXWRITER
 
-#ifdef __APPLE__
-    #include "/usr/local/include/xlsxwriter.h"
-#else
-    #include "/usr/include/xlsxwriter.h"
-#endif
+#include "/usr/local/include/xlsxwriter.h"
 
 #endif /* shim.h */
