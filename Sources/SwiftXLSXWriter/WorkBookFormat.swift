@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  WorkBookFormat.swift
 //  
 //
 //  Created by Javier Segura Perez on 31/1/21.
@@ -73,22 +73,55 @@ public class WorkBookFormat
         format_set_num_format(_format, format.cString(using: .utf8))
     }
         
-    public func setFontColor(color: WorkBookColor) {
+    public func setFont(color: WorkBookColor) {
         format_set_font_color(_format, color.rgb)
     }
     
     var _fontSize:Double = 12
     public var fontSize:Double { get { return _fontSize } }
-    public func setFontSize(size:Double){
+    public func setFont(size:Double){
         _fontSize = size
         format_set_font_size(_format, size)
+    }
+    
+    public func setAlign(_ align:WorkBookFormatAlign){
+        format_set_align(_format, align.horizontal.rawValue)
+        if align.vertical != nil { format_set_align(_format, align.vertical!.rawValue) }
+    }
+    
+    public func setIndent(_ level:UInt8) {
+        format_set_indent(_format, level)
+    }
+    
+    public func setBorder(_ border:WorkBookFormatBorder) {
+        // Apply border styles
+        if border.style != nil {
+            format_set_border(_format, border.style!.rawValue)
+        }
+        else {
+            if border.top     != nil { format_set_top   ( _format, border.top!.rawValue    ) }
+            if border.bottom  != nil { format_set_bottom( _format, border.bottom!.rawValue ) }
+            if border.left    != nil { format_set_left  ( _format, border.left!.rawValue   ) }
+            if border.right   != nil { format_set_right ( _format, border.right!.rawValue  ) }
+        }
+        
+        // Apply border color
+        if border.color != nil {
+            format_set_border_color(_format, border.color!.rgb)
+        }
+        else {
+            if border.topColor != nil    { format_set_top_color   (_format, border.topColor!.rgb    ) }
+            if border.bottomColor != nil { format_set_bottom_color(_format, border.bottomColor!.rgb ) }
+            if border.leftColor != nil   { format_set_left_color  (_format, border.leftColor!.rgb   ) }
+            if border.rightColor != nil  { format_set_right_color (_format, border.rightColor!.rgb  ) }
+        }
     }
 
 }
 
 extension WorkBookFormat
 {
-    convenience init(_ format:UnsafeMutablePointer<lxw_format>, bold:Bool = false, locale:String? = nil, formatType:WorkBookFormatType = .string, fontSize:Double?, fontColor: WorkBookColor?) {
+    convenience init(_ format:UnsafeMutablePointer<lxw_format>, bold:Bool = false, locale:String? = nil, formatType:WorkBookFormatType = .string, fontSize:Double?, fontColor: WorkBookColor?, border:WorkBookFormatBorder?) {
         self.init(format, locale: locale, formatType: formatType)
         
         if bold == true { setBold() }
@@ -97,9 +130,11 @@ extension WorkBookFormat
             setNumberFormatType(type: WorkBookNumberFormatType(rawValue: formatType.rawValue)!)
         }
         
-        if fontSize != nil { setFontSize(size: fontSize!) }
+        if fontSize != nil { setFont(size: fontSize!) }
         
-        if fontColor != nil { setFontColor(color: fontColor!) }
+        if fontColor != nil { setFont(color: fontColor!) }
+        
+        if border != nil { setBorder(border!) }
     }
 }
 

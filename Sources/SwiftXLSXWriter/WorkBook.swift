@@ -32,9 +32,9 @@ public class WorkBook
         return WorkSheet(ws!)
     }
     
-    public func addFormat(bold:Bool = false, locale:String? = nil, formatType:WorkBookFormatType = .string, fontSize:Double? = nil, fontColor:WorkBookColor? = nil ) -> WorkBookFormat {
+    public func addFormat(bold:Bool = false, locale:String? = nil, formatType:WorkBookFormatType = .string, fontSize:Double? = nil, fontColor:WorkBookColor? = nil, border:WorkBookFormatBorder? = nil) -> WorkBookFormat {
         let f = workbook_add_format(_workbook)        
-        return WorkBookFormat(f!, bold: bold, locale: locale ?? _locale, formatType: formatType, fontSize: fontSize, fontColor: fontColor)
+        return WorkBookFormat(f!, bold: bold, locale: locale ?? _locale, formatType: formatType, fontSize: fontSize, fontColor: fontColor, border: border)
     }
 
 }
