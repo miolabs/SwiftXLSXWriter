@@ -43,7 +43,11 @@ public class WorkBookFormat
         _format = format
     }
     
+    
+    var _isBold:Bool = false
+    public var isBold:Bool { get { return _isBold } }
     public func setBold(){
+        _isBold = true
         format_set_bold(_format)
     }
     
@@ -73,7 +77,10 @@ public class WorkBookFormat
         format_set_font_color(_format, color.rgb)
     }
     
+    var _fontSize:Double = 12
+    public var fontSize:Double { get { return _fontSize } }
     public func setFontSize(size:Double){
+        _fontSize = size
         format_set_font_size(_format, size)
     }
 

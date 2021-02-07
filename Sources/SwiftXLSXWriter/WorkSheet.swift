@@ -40,4 +40,8 @@ public class WorkSheet
         }
     }
     
+    public func setColumn(firstColumn:UInt16, lastColumn:UInt16, width:Double, format:WorkBookFormat?){
+        worksheet_set_column(_worksheet, firstColumn, lastColumn, width, format?.cFormat)
+    }
+    
 }
