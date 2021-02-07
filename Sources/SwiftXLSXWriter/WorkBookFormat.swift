@@ -63,7 +63,7 @@ public class WorkBookFormat
         }
                 
         if type == .currency {
-            format = "$" + format
+            format = WorkBookFormat.localCurrencySymbolFormat(format: format, locale: _locale)
         }
         
         setNumberFormat(format: format)
@@ -102,3 +102,22 @@ extension WorkBookFormat
         if fontColor != nil { setFontColor(color: fontColor!) }
     }
 }
+
+
+extension WorkBookFormat
+{
+    static func localCurrencySymbolFormat(format:String, locale:String?) -> String {
+        if locale == nil { return format }
+        
+        let split = locale!.components(separatedBy: "_")
+        if split.count < 2 { return format }
+        let country = split[1]
+        
+        switch country {
+        case "ES", "NL": return format + " €"
+        case "US": return "$" + format
+        default: return format
+        }
+    }
+}
+
