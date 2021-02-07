@@ -115,6 +115,7 @@ extension WorkBookFormat
         
         switch country {
         case "ES", "NL": return format + " €"
+        case "AE": return format + " [$AED]"
         case "US": return "$" + format
         default: return format
         }
