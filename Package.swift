@@ -21,7 +21,7 @@ let package = Package(
     targets: [
         .systemLibrary(
             name: "CXLSXWriter",
-            pkgConfig: "xlsxwriter",
+            pkgConfig: "libxlsxwriter",
             providers: [
                 .brew(["libxlsxwriter"])
             ]
