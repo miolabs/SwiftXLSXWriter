@@ -8,7 +8,7 @@
 import Foundation
 import CXLSXWriter
 
-public class WorkBook
+public final class WorkBook
 {
     let filename:String
     
@@ -16,15 +16,24 @@ public class WorkBook
     public var locale:String? { get { return _locale } }
     
     let _workbook:UnsafeMutablePointer<lxw_workbook>
+    var isClosed = true
 
     public init(withFilename filename:String, locale:String? = nil){
         self.filename = filename
         _locale = locale
         _workbook = workbook_new(filename.cString(using: .utf8))
+        isClosed = false
+    }
+    
+    deinit {
+        close()
     }
     
     public func close(){
-        workbook_close(_workbook)
+        if isClosed == false {
+            workbook_close(_workbook)
+        }
+        isClosed = true
     }
     
     public func addWorksheet(withName name:String?) -> WorkSheet {
